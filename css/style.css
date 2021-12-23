@@ -1,0 +1,47 @@
+body {
+    background: #eee;
+}
+
+.wrapper {
+    margin: 80px;
+}
+
+.form-signin, .form-signup {
+    max-width: 380px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 15px 40px 50px;
+    border: 1px solid #e5e5e5;
+    border-radius: 10px;
+}
+
+.form-signin .form-signin-heading, .form-signup .form-signup-heading {
+    margin-bottom: 10px;
+}
+
+.form-signin input[type="text"], .form-signin input[type="password"],
+.form-signup input[type="text"], .form-signup input[type="password"] {
+    margin-bottom: 10px;
+}
+
+.form-signin .form-control,
+.form-signup .form-control {
+    padding: 10px;
+}
+.form-signin span ,.form-signup span {
+    color: darkcyan;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+.fileMD5,.fid,#file {
+    display: none;
+}
+table .fileName{
+    width: 70%;
+}
+table .fileSize{
+    width: 10%;
+}
+table .fileControl{
+    width: 20%;
+}

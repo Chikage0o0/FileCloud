@@ -1,0 +1,51 @@
+### 接口使用文档
+
+必备参数 `method`
+
+- loginUser 登录用户 POST
+    - 参数1 user 用户名
+    - 参数2 passwd 密码
+    - 参数3 captcha 验证码
+        - 返回xml `error` **0** 成功 **1** 验证码错误 **2** 不存在用户 **3** 密码错误 **4** 参数不全或已经登录
+- register 注册用户 POST
+    - 参数1 user 用户名
+    - 参数2 passwd 密码
+        - 返回xml `error` **0** 成功 **1** 用户名重复 **2** 参数错误
+- changePasswd 注册用户 POST
+    - 参数1 user 用户名
+    - 参数2 passwd 密码
+    - 参数3 newPasswd 密码
+        - 返回xml `error` **0** 成功  **1** 失败 **2** 参数错误
+- newFolder 新建文件夹 POST/GET 必须先登录
+    - 参数1 folderName 文件夹名
+    - 参数2 Parent 父文件夹id
+        - 返回json `error` **0** 成功  **1** 失败 **2** 参数错误 **3** 无权访问
+- renameFile 重命名 POST/GET 必须先登录
+    - 参数1 newName 新文件名
+    - 参数2 fid 文件id
+        - 返回json `error` **0** 成功  **1** 失败 **2** 参数错误 **3** 无权访问
+- delFile 删除文件 POST/GET 必须先登录
+    - 参数1 fid 文件id
+        - 返回json `error` **0** 成功  **1** 失败 **2** 参数错误 **3** 无权访问
+- showFile 查看文件 POST/GET 必须先登录
+    - 参数1 fid 文件id 可选 不填默认主目录
+    - 参数2 page 分页页数
+    - 参数3 limit 每页条数
+        - 返回json `error` **0** 成功  **1** 失败 **2** 参数错误 **3** 无权访问
+- isExistMD5 通过MD5秒传 POST 必须先登录
+    - 参数1 fileMD5 文件MD5
+    - 参数2 fileName 文件名
+    - 参数3 parent 父文件夹id
+        - 返回json `error` **0** 成功  **1** 失败 **2** 参数错误 **3** 无权访问
+- uploadFile 上传文件 POST 必须先登录，秒传失败后再使用该API
+    - 参数1 文件
+    - 参数2 fileMD5 文件MD5
+    - 参数3 parent 父文件夹id
+        - 返回json `error` **0** 成功  **1-8** 失败原因 **9** 参数错误 **10** 无权访问
+- downloadFile 下载文件 GET/POST 必须先登录，下载流量经过PHP
+    - 参数1 fid 文件id
+        - 返回json `error` **0** 成功   **2** 参数错误 **3** 无权访问 **4** 无法下载文件夹
+- getCaptcha 获取验证码 GET/POST 并将验证码存入session
+- logout 注销用户 GET/POST
+- isLogin 是否登录 GET/POST 登录返回1 否则返回0
+

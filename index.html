@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="Zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文件</title>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script src="js/function.js"></script>
+    <script src="js/spark-md5.js"></script>
+    <script>
+        $(document).ready(function () {
+            isLogin("请先登录", "login.html", "0")
+            showFile($.cookie('pathID'))
+            $("#logout").click(function () {
+                logout()
+            })
+            $("#newFolder").click(function () {
+                newFolder()
+            })
+            $("#backParent").click(function () {
+                showFile($("#folderParent").text())
+            })
+            $("#backHome").click(function () {
+                showFile()
+            })
+            $("#file").change(function () {
+                console.log($(this))
+                let data = this.files[0];
+                getMD5(data, function (md5) {
+                    uploadFile(md5, data, $("#folderFid").text())
+                })
+            })
+            $("#upload").click(function () {
+                $("#file").trigger("click");
+            })
+            $(".table-responsive").on("click", ".deleteFile", function () {
+                delFile($(this).parent().parent())
+            })
+            $(".table-responsive").on("click", ".renameFile", function () {
+                renameFile($(this).parent().parent())
+            })
+            $(".table-responsive").on("click", ".openFolder", function () {
+                showFile($(this).parent().parent().children(".fid").text())
+            })
+            $(".table-responsive").on("click", ".downloadFile", function () {
+                window.open('/api.php?method=downloadFile&fid=' + $(this).parent().parent().children(".fid").text(), '_blank');
+            })
+
+            $("nav").delegate(".pageid","click",function () {
+                $(".pagination .active").attr("class", "page-item pageid")
+                $(this).attr("class", "page-item pageid active")
+                showFile()
+            })
+
+            $("nav").delegate(".pagenext","click",function () {
+               let page=Number($(".pagination .active").children().text())+1
+                console.log(page)
+                $(".pagination .active").attr("class", "page-item pageid")
+                $("#page"+page).attr("class","page-item pageid active")
+                showFile()
+            })
+            $("nav").delegate(".pagepre","click",function () {
+                let page=Number($(".pagination .active").children().text())-1
+                $(".pagination .active").attr("class", "page-item pageid")
+                $("#page"+page).attr("class","page-item pageid active")
+                showFile()
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2 text-center">
+            <button id="upload" type="button" class="btn btn-link">上传文件</button>
+            <input type="file" id="file">
+        </div>
+        <div class="col-lg-2  text-center">
+            <button id="newFolder" type="reset" class="btn btn-link">新建文件夹</button>
+        </div>
+        <div class="col-lg-4 text-center">
+            <button id="backParent" type="button" class="btn btn-link">回到上一层</button>
+        </div>
+        <div class="col-lg-2 text-center">
+            <button id="backHome" type="button" class="btn btn-link">回到根目录</button>
+        </div>
+        <div class="col-lg-2 text-center">
+            <button id="logout" type="button" class="btn btn-link">注销</button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid table-responsive">
+    <span style="display: none;" id="folderFid"></span>
+    <span style="display: none;" id="folderParent"></span>
+    <table class="table table-hover align-middle">
+        <thead>
+        <tr>
+            <th class="fid">fid</th>
+            <th class="fileMD5">MD5</th>
+            <th class="fileName">文件名</th>
+            <th class="fileSize">大小</th>
+            <th class="fileControl">操作</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<div class="container-fluid paging">
+    <nav aria-label="Page navigation">
+        <ul id="pageNavigation" class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">上一页</a>
+            </li>
+            <li class="page-item pageid active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item disabled">
+                <a class="page-link" href="#">下一页</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+</html>

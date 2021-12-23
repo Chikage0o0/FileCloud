@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="Zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>登录</title>
+    <!-- Link CSS -->
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="js/function.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            isLogin("你已登录", "index.html", "1")
+            getCaptcha();
+            $(".form-signup button").click(function () {
+                register()
+            })
+            $(".form-signin button").click(function () {
+                login()
+            })
+            $("#captcha").click(function () {
+                getCaptcha()
+            })
+            $("#register").click(function () {
+                $("#signin").hide();
+                $("#signup").show();
+            })
+            $("#login").click(function () {
+                $("#signup").hide();
+                $("#signin").show();
+            })
+        })
+    </script>
+</head>
+<body>
+<div class="wrapper" id="signin">
+    <form class="form-signin">
+        <h2 class="form-signin-heading text-center">登录</h2>
+        <input type="text" class="form-control" name="username" placeholder="用户名" required="">
+        <input type="password" class="form-control" name="password" placeholder="密码" required="">
+        <img id="captcha" src="" alt=""><input type="text" class="form-control" name="captcha" placeholder="验证码"
+                                               required="">
+        <span id="register">转至注册</span>
+        <div class="d-grid gap-2">
+            <button type="button" class="btn btn-lg btn-primary">登录</button>
+        </div>
+    </form>
+</div>
+<div class="wrapper" id="signup" style="display:none;">
+    <form class="form-signup">
+        <h2 class="form-signup-heading text-center">注册</h2>
+        <input type="text" class="form-control" name="username" placeholder="用户名" required="">
+        <input type="password" class="form-control" name="password" placeholder="密码" required="">
+        <span id="login">转至登录</span><br>
+        <div class="d-grid gap-2">
+            <button type="button" class="btn btn-lg btn-primary">注册</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
