@@ -7,7 +7,7 @@ class Config
     const DB = array(       //数据库连接信息
         'Host' => 'localhost',
         'UserName' => 'root',
-        'UserPasswd' => '',
+        'UserPasswd' => '123456',
         'DBName' => 'filecloud',
         'DBPort' => '3306'
     );
